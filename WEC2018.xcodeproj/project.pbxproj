@@ -49,6 +49,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		269CA4E2200934130024DB11 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		269CA4E3200934130024DB11 /* NoteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
+		269CA4E4200934130024DB11 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		269CA4E820093B7B0024DB11 /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
+		269CA4EC20093F560024DB11 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
+		269CA4EE2009561E0024DB11 /* TodoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewController.swift; sourceTree = "<group>"; };
+		269CA4F020095D8A0024DB11 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		269CA4F220095E1E0024DB11 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		29E99349FA9C22AFC6CCB654 /* Pods-WEC2018.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WEC2018.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WEC2018/Pods-WEC2018.debug.xcconfig"; sourceTree = "<group>"; };
 		3824463E20093F95005B2F8C /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		382446402009413F005B2F8C /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
@@ -379,6 +387,7 @@
 			files = (
 				385E7FE82009248D003412F3 /* UIApplication+Extensions.swift in Sources */,
 				385E7FF520092496003412F3 /* Constants.swift in Sources */,
+				269CA4E920093B7B0024DB11 /* NewNoteViewController.swift in Sources */,
 				385E7FE92009248D003412F3 /* NSAttributedString+Extensions.swift in Sources */,
 				385E7FF420092496003412F3 /* UIView+Style.swift in Sources */,
 				385E7FEB2009248D003412F3 /* UIViewController+Extensions.swift in Sources */,
@@ -411,6 +420,8 @@
 				3824464520094140005B2F8C /* Clock.swift in Sources */,
 				3824465B20096486005B2F8C /* NSConstraintLayoutSet.swift in Sources */,
 				38B1D28620092D010073D3A1 /* Animation.swift in Sources */,
+				269CA4EF2009561E0024DB11 /* TodoTableViewController.swift in Sources */,
+				269CA4ED20093F560024DB11 /* NewNoteView.swift in Sources */,
 				385E7FF620092496003412F3 /* Stylesheet.swift in Sources */,
 				38244657200963B2005B2F8C /* PlannerEvent.swift in Sources */,
 			);
