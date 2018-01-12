@@ -87,4 +87,35 @@ enum Stylesheet {
         
     }
     
+    enum Buttons {
+        
+        static let primary = Style<UIButton> {
+            $0.backgroundColor = .primaryColor
+            let titleColor: UIColor = UIColor.primaryColor.isLight ? .black : .white
+            $0.titleLabel?.font = buttonFont
+            $0.setTitleColor(titleColor, for: .normal)
+            $0.setTitleColor(titleColor.withAlphaComponent(0.3), for: .highlighted)
+            $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        }
+        
+        static let secondary = Style<UIButton> {
+            $0.backgroundColor = .secondaryColor
+            let titleColor: UIColor = UIColor.secondaryColor.isLight ? .black : .white
+            $0.titleLabel?.font = buttonFont
+            $0.setTitleColor(titleColor, for: .normal)
+            $0.setTitleColor(titleColor.withAlphaComponent(0.3), for: .highlighted)
+            $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        }
+        
+        static let link = Style<UIButton> {
+            $0.contentHorizontalAlignment = .left
+            let titleColor: UIColor = UIColor.primaryColor
+            $0.titleLabel?.font = buttonFont
+            $0.setTitleColor(titleColor, for: .normal)
+            $0.setTitleColor(titleColor.withAlphaComponent(0.3), for: .highlighted)
+            $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        }
+        
+    }
+    
 }

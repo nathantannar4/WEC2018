@@ -22,7 +22,7 @@ class PlannerEvent: PFObject {
 extension PlannerEvent: PFSubclassing {
     
     static func parseClassName() -> String {
-        return "PlannerEvent"
+        return "Events"
     }
 }
 

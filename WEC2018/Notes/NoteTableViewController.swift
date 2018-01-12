@@ -7,41 +7,111 @@
 //
 
 import UIKit
+import Parse
+import ParseLiveQuery
 
 class NoteTableViewController: UITableViewController {
     
     //MARK: Properties
+    
     var notes = [Note]()
     
-    @objc func didTapAdd() {
-        editNote(content: nil)
+    lazy var notesQuery: PFQuery<Note> = {
+        return Note.query()?.whereKey("user", equalTo: PFUser.current() ?? "").includeKey("user").addDescendingOrder("updatedAt") as! PFQuery<Note>
+    }()
+    
+    var subscription: Subscription<Note>? = nil
+    
+    var client: Client?
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        title = "Notes"
+        tabBarItem = UITabBarItem(title: title, image: #imageLiteral(resourceName: "icon_note"), tag: 0)
     }
     
-    private func editNote(content: String?) {
-        let newNoteViewController = NewNoteViewController()
-        newNoteViewController.contentString = content
-        self.navigationController?.pushViewController(newNoteViewController, animated: true)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(didTapLogout))
+        navigationItem.backBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
         
 
         tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
+        tableView.tableFooterView = UIView()
         
         loadNotes()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
-    }
-
     private func loadNotes() {
         
+        Note.query()?.findObjectsInBackground(block: { (objects, error) in
+            guard let objects = objects as? [Note] else {
+                self.handleError(error?.localizedDescription)
+                return
+            }
+            self.notes = objects
+            self.tableView.reloadData()
+        })
+        
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
+        
+        subscription = Client.shared.subscribe(notesQuery)
+        subscription?.handle(Event.created) { query, note in
+            DispatchQueue.main.sync {
+                self.notes.insert(note, at: 0)
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
+        }
+        subscription?.handle(Event.updated) { query, note in
+            DispatchQueue.main.sync {
+                if let index = self.notes.index(where: { return $0.objectId == note.objectId }) {
+                    self.notes[index] = note
+                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
+            }
+        }
+        subscription?.handle(Event.deleted) { query, note in
+            DispatchQueue.main.sync {
+                if let index = self.notes.index(where: { return $0.objectId == note.objectId }) {
+                    self.notes.remove(at: index)
+                    self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
+            }
+        }
+    }
+    
+    @objc
+    func didTapAdd() {
+        
+        let newNote = Note()
+        newNote.user = PFUser.current()
+        newNote.date = Date()
+        let newNoteViewController = NewNoteViewController(for: newNote)
+        navigationController?.pushViewController(newNoteViewController, animated: true)
+    }
+    
+    @objc
+    func didTapLogout() {
+        
+        PFUser.logOutInBackground { (error) in
+            guard error == nil else {
+                self.handleError(error?.localizedDescription)
+                return
+            }
+            Router.navigateTo(.welcome, animated: true)
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,70 +124,36 @@ class NoteTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        self.title = "Notes"
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath) as! NoteTableViewCell
         
         let note = notes[indexPath.row]
-        cell.contentLabel.text = note.content
-        cell.dateLabel.text = note.date?.timeElapsedDescription()
-
-        // Configure the cell...
+        cell.textLabel?.text = note.content
+        cell.detailTextLabel?.text = note.date?.timeElapsedDescription()
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        editNote(content: notes[indexPath.row].content)
+        
+        let newNoteViewController = NewNoteViewController(for: notes[indexPath.row])
+        navigationController?.pushViewController(newNoteViewController, animated: true)
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.notes.count;
+        return notes.count
     }
-
-    /*
-    // Override to support conditional editing of the table view.
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, _) in
+            self.notes[indexPath.row].deleteInBackground()
+        }
+        return [deleteAction]
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

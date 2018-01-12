@@ -14,28 +14,15 @@ class NoteTableViewCell: UITableViewCell {
         return "NoteTableViewCell"
     }
 
-    //MARK: Properties
-    var contentLabel: UILabel = UILabel()
-    var dateLabel: UILabel = UILabel()
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupView()
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        textLabel?.numberOfLines = 0
+        detailTextLabel?.numberOfLines = 0
+        detailTextLabel?.textColor = UIColor.gray
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func setupView() {
-        
-        addSubview(contentLabel)
-        addSubview(dateLabel)
-        
-        contentLabel.anchor(topAnchor, left: leftAnchor, bottom: dateLabel.topAnchor, right: rightAnchor, topConstant: 8, leftConstant: 24, bottomConstant: 4, rightConstant: 24, widthConstant: 0, heightConstant: 0)
-        dateLabel.anchor(contentLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 24, bottomConstant: 8, rightConstant: 24, widthConstant: 0, heightConstant: 0)
-        
-        dateLabel.textColor = UIColor.gray
-    }
 }

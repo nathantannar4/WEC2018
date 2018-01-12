@@ -21,6 +21,6 @@ class Task: PFObject {
 extension Task: PFSubclassing {
     
     static func parseClassName() -> String {
-        return "Task"
+        return "Tasks"
     }
 }

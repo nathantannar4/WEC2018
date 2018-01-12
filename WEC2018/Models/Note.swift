@@ -13,12 +13,12 @@ class Note: PFObject {
     
     @NSManaged var content: String?
     @NSManaged var date: Date?
-    
+    @NSManaged var user: PFUser?
 }
 
 extension Note: PFSubclassing {
     
     static func parseClassName() -> String {
-        return "Note"
+        return "Notes"
     }
 }

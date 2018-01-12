@@ -8,59 +8,55 @@
 
 import UIKit
 import Parse
+import AlertHUDKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    /// A visual effect view for security when biometric authentication is on
+    private var blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        return blurView
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         UIApplication.shared.statusBarStyle = .lightContent
         
+        // AlertHUDKit Defaults
+        Alert.Defaults.Color.Info = .primaryColor
+        Alert.Defaults.Color.Danger = .red
+        Alert.Defaults.Color.Success = .primaryColor
+        Alert.Defaults.Font.Info = .boldSystemFont(ofSize: 14)
+        Alert.Defaults.Font.Warning = .boldSystemFont(ofSize: 14)
+        Alert.Defaults.Font.Danger = .boldSystemFont(ofSize: 14)
+        Alert.Defaults.Font.Success = .boldSystemFont(ofSize: 14)
+        
         connectToParseServer()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        
-        let viewControllers = [
-            UINavigationController(rootViewController: NoteTableViewController()),
-            TimerViewController(),
-            CalendarViewController()
-        ]
-        
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.isTranslucent = false
-        tabBarController.tabBar.barTintColor = .white
-        tabBarController.tabBar.tintColor = .primaryColor
-        tabBarController.setViewControllers(viewControllers, animated: false)
-        
-        window?.rootViewController = tabBarController
+        if PFUser.current() != nil {
+            window?.rootViewController = Router.controllerFor(.home)
+        } else {
+            window?.rootViewController = Router.controllerFor(.welcome)
+        }
         window?.makeKeyAndVisible()
                 
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        addSecurityBlurEffect()
+        toggleSecurityBlur(isLocked: true)
     }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        
+        toggleSecurityBlur(isLocked: false)
     }
     
     func connectToParseServer() {
@@ -70,19 +66,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Note.registerSubclass()
         
         Parse.enableLocalDatastore()
-        Parse.initialize(with: API.configuration())
-    }
-
-}
-
-class API {
-    
-    class func configuration() -> ParseClientConfiguration {
-        return ParseClientConfiguration(block: {
+        Parse.initialize(with: ParseClientConfiguration(block: {
             $0.applicationId = "758c0e8286b1ea728d6f941f2f6e3fe4db49cef8"
             $0.clientKey = "6fa4e837b886f5a0b7fc902c31cac8fa6b37a31e"
             $0.server = "https://nathantannar.me/api/sand"
-        })
+        }))
     }
-}
+    
+    // MARK: - Auth Security Blur
+    
+    private func addSecurityBlurEffect() {
+        
+        if blurView.superview == nil {
+            // Delay to account for launch screen annimation
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                self.window?.addSubview(self.blurView)
+                self.blurView.fillSuperview()
+            })
+        }
+    }
+    
+    private func toggleSecurityBlur(isLocked: Bool) {
+        
+        if isLocked {
+            if !Auth.shared.granted {
+                Auth.shared.unlock(completion: { result in
+                    self.blurView.isHidden = result
+                })
+            } else {
+                self.blurView.isHidden = true
+            }
+        } else {
+            if Auth.shared.isSetup {
+                Auth.shared.lock()
+                blurView.isHidden = false
+            }
+        }
+    }
 
+}

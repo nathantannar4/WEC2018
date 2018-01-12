@@ -10,37 +10,48 @@ import UIKit
 
 class NewNoteViewController: UIViewController {
     
-    var newNoteView: NewNoteView!
-    var contentString: String?
+    let note: Note
+    
+    var newNoteView = NewNoteView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Edit Note"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave))
+        title = "Note"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
+                                                            target: self,
+                                                            action: #selector(didTapSave))
 
-        newNoteView = NewNoteView()
-        self.view.addSubview(newNoteView)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy HH:mm"
-        newNoteView.dateLabel.text = dateFormatter.string(from: Date())
-        if (contentString != nil) {
-            newNoteView.titleText.text = contentString
-        }
+        view.addSubview(newNoteView)
         newNoteView.fillSuperview()
+        
+        newNoteView.dateLabel.text = note.date?.string(dateStyle: .medium, timeStyle: .short)
+        
+        newNoteView.titleText.onTextDidChange {
+            self.note.content = $0
+        }
+        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    init(for note: Note) {
+        self.note = note
+        super.init(nibName: nil, bundle: nil)
     }
     
-    @objc private func didTapSave() {
-        // ....
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    private func didTapSave() {
+        
+        note.date = Date()
+        note.saveInBackground { (success, error) in
+            guard success else {
+                self.handleError(error?.localizedDescription)
+                return
+            }
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
 }
