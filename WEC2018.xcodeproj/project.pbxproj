@@ -14,6 +14,15 @@
 		3824464720094140005B2F8C /* AvoidingSubviewScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446422009413F005B2F8C /* AvoidingSubviewScrollViewDelegate.swift */; };
 		3824464820094140005B2F8C /* CoreAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446432009413F005B2F8C /* CoreAnimation.swift */; };
 		3824464920094140005B2F8C /* CoreGraphicsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824464420094140005B2F8C /* CoreGraphicsExtensions.swift */; };
+		3824464F200961FD005B2F8C /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824464E200961FD005B2F8C /* GradientView.swift */; };
+		38244651200962F5005B2F8C /* CardsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38244650200962F5005B2F8C /* CardsCollectionViewLayout.swift */; };
+		382446532009639D005B2F8C /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446522009639D005B2F8C /* EventCell.swift */; };
+		38244656200963B2005B2F8C /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38244654200963B1005B2F8C /* Task.swift */; };
+		38244657200963B2005B2F8C /* PlannerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38244655200963B1005B2F8C /* PlannerEvent.swift */; };
+		38244659200963D5005B2F8C /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38244658200963D5005B2F8C /* InputTextView.swift */; };
+		3824465B20096486005B2F8C /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824465A20096486005B2F8C /* NSConstraintLayoutSet.swift */; };
+		3824465D20096816005B2F8C /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824465C20096816005B2F8C /* EventDetailViewController.swift */; };
+		3824465F200968AE005B2F8C /* FormerInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824465E200968AE005B2F8C /* FormerInputAccessoryView.swift */; };
 		385E7FC920092149003412F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FC820092149003412F3 /* AppDelegate.swift */; };
 		385E7FCB20092149003412F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FCA20092149003412F3 /* ViewController.swift */; };
 		385E7FCD20092149003412F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E7FCC20092149003412F3 /* Assets.xcassets */; };
@@ -47,6 +56,15 @@
 		382446422009413F005B2F8C /* AvoidingSubviewScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvoidingSubviewScrollViewDelegate.swift; sourceTree = "<group>"; };
 		382446432009413F005B2F8C /* CoreAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreAnimation.swift; sourceTree = "<group>"; };
 		3824464420094140005B2F8C /* CoreGraphicsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphicsExtensions.swift; sourceTree = "<group>"; };
+		3824464E200961FD005B2F8C /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		38244650200962F5005B2F8C /* CardsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewLayout.swift; sourceTree = "<group>"; };
+		382446522009639D005B2F8C /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		38244654200963B1005B2F8C /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		38244655200963B1005B2F8C /* PlannerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannerEvent.swift; sourceTree = "<group>"; };
+		38244658200963D5005B2F8C /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		3824465A20096486005B2F8C /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
+		3824465C20096816005B2F8C /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		3824465E200968AE005B2F8C /* FormerInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInputAccessoryView.swift; sourceTree = "<group>"; };
 		385E7FC520092149003412F3 /* WEC2018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WEC2018.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		385E7FC820092149003412F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		385E7FCA20092149003412F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -93,8 +111,14 @@
 			children = (
 				385E7FD7200923FC003412F3 /* CalendarViewController.swift */,
 				38B1D27D200926E80073D3A1 /* CalendarCell.swift */,
+				382446522009639D005B2F8C /* EventCell.swift */,
+				3824465C20096816005B2F8C /* EventDetailViewController.swift */,
 				38B1D28320092CF80073D3A1 /* AnimationClass.swift */,
 				38B1D28520092D000073D3A1 /* Animation.swift */,
+				3824464E200961FD005B2F8C /* GradientView.swift */,
+				38244658200963D5005B2F8C /* InputTextView.swift */,
+				38244650200962F5005B2F8C /* CardsCollectionViewLayout.swift */,
+				3824465E200968AE005B2F8C /* FormerInputAccessoryView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -142,6 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				385E7FC820092149003412F3 /* AppDelegate.swift */,
+				38244655200963B1005B2F8C /* PlannerEvent.swift */,
+				38244654200963B1005B2F8C /* Task.swift */,
 				385E7FF8200924EA003412F3 /* Style */,
 				385E7FCA20092149003412F3 /* ViewController.swift */,
 				3824463D20093E25005B2F8C /* Clock */,
@@ -157,6 +183,7 @@
 		385E7FF7200924DD003412F3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3824465A20096486005B2F8C /* NSConstraintLayoutSet.swift */,
 				385E7FE22009248D003412F3 /* Date+Extensions.swift */,
 				385E7FDD2009248C003412F3 /* NSAttributedString+Extensions.swift */,
 				385E7FE42009248D003412F3 /* String+Extensions.swift */,
@@ -314,6 +341,7 @@
 				"${BUILT_PRODUCTS_DIR}/BiometricAuthentication/BiometricAuthentication.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
 				"${BUILT_PRODUCTS_DIR}/ParseLiveQuery/ParseLiveQuery.framework",
@@ -328,6 +356,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BiometricAuthentication.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoltsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParseLiveQuery.framework",
@@ -359,22 +388,31 @@
 				385E7FD8200923FC003412F3 /* CalendarViewController.swift in Sources */,
 				3824464720094140005B2F8C /* AvoidingSubviewScrollViewDelegate.swift in Sources */,
 				385E7FE72009248D003412F3 /* UIView+AutoLayout.swift in Sources */,
+				38244651200962F5005B2F8C /* CardsCollectionViewLayout.swift in Sources */,
 				385E7FEA2009248D003412F3 /* UIButton+Extensions.swift in Sources */,
 				38B1D27E200926E80073D3A1 /* CalendarCell.swift in Sources */,
 				385E7FE52009248D003412F3 /* UIDevice+Extensions.swift in Sources */,
+				3824465F200968AE005B2F8C /* FormerInputAccessoryView.swift in Sources */,
 				385E7FE62009248D003412F3 /* UIImage+Extensions.swift in Sources */,
 				3824464820094140005B2F8C /* CoreAnimation.swift in Sources */,
 				38B1D28420092CF80073D3A1 /* AnimationClass.swift in Sources */,
 				3824464920094140005B2F8C /* CoreGraphicsExtensions.swift in Sources */,
+				3824464F200961FD005B2F8C /* GradientView.swift in Sources */,
 				385E7FF02009248D003412F3 /* String+Extensions.swift in Sources */,
 				3824463F20093F95005B2F8C /* TimerViewController.swift in Sources */,
+				38244656200963B2005B2F8C /* Task.swift in Sources */,
+				382446532009639D005B2F8C /* EventCell.swift in Sources */,
 				385E7FED2009248D003412F3 /* UIWindow+Extenions.swift in Sources */,
 				385E7FEF2009248D003412F3 /* UIColor+Extensions.swift in Sources */,
+				3824465D20096816005B2F8C /* EventDetailViewController.swift in Sources */,
 				385E7FCB20092149003412F3 /* ViewController.swift in Sources */,
+				38244659200963D5005B2F8C /* InputTextView.swift in Sources */,
 				385E7FC920092149003412F3 /* AppDelegate.swift in Sources */,
 				3824464520094140005B2F8C /* Clock.swift in Sources */,
+				3824465B20096486005B2F8C /* NSConstraintLayoutSet.swift in Sources */,
 				38B1D28620092D010073D3A1 /* Animation.swift in Sources */,
 				385E7FF620092496003412F3 /* Stylesheet.swift in Sources */,
+				38244657200963B2005B2F8C /* PlannerEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

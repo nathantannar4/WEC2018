@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 import JTAppleCalendar
 
 class CalendarViewController: UIViewController {
@@ -14,6 +15,7 @@ class CalendarViewController: UIViewController {
     var headerView: UIView = {
         let view = UIView()
         view.backgroundColor = .primaryColor
+        view.apply(Stylesheet.Global.shadow)
         return view
     }()
     
@@ -27,16 +29,17 @@ class CalendarViewController: UIViewController {
     lazy var addButton: UIButton = {
         let button = UIButton()
         button.tintColor = .white
+        button.adjustsImageWhenHighlighted = false
         button.setImage(#imageLiteral(resourceName: "icon_add").withRenderingMode(.alwaysTemplate), for: .normal)
         button.addTarget(self, action: #selector(didTapAdd), for: .touchUpInside)
         return button
     }()
     
     var daysOfWeekHeader: UIStackView = {
-        let days = ["SUN","MON","TUE","WED","THU","FRI","SAT"]
+        let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
         let dayLabels: [UILabel] = days.map {
             let label = UILabel()
-            label.font = .boldSystemFont(ofSize: 18)
+            label.font = .boldSystemFont(ofSize: 15)
             label.text = $0
             label.textAlignment = .center
             label.textColor = .white
@@ -68,19 +71,33 @@ class CalendarViewController: UIViewController {
         return dateFormatter
     }()
     
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .white
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.tableFooterView = UIView()
-        return tableView
+    lazy var collectionView: UICollectionView = { [weak self] in
+        let layout = CardsCollectionViewLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(EventCell.self, forCellWithReuseIdentifier: EventCell.reuseIdentifier)
+        collectionView.backgroundColor = .clear
+        layout.itemSize = CGSize(width: 300, height: 180)
+        return collectionView
     }()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        title = "Calendar"
+        tabBarItem = UITabBarItem(title: title, image: #imageLiteral(resourceName: "icon_calendar"), tag: 0)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Calendar"
+        
         view.backgroundColor = .white
         setupCalendarView()
     }
@@ -92,20 +109,10 @@ class CalendarViewController: UIViewController {
         if validCell.isSelected {
             validCell.dateLabel.textColor = UIColor.white
         } else {
-            let today = Date()
-            persianDateFormatter.dateFormat = "yyyy MM dd"
-            let todayDateStr = persianDateFormatter.string(from: today)
-            dateFormatter.dateFormat = "yyyy MM dd"
-            let cellDateStr = dateFormatter.string(from: cellState.date)
-            
-            if todayDateStr == cellDateStr {
-                validCell.dateLabel.textColor = UIColor.red
-            } else {
-                if cellState.dateBelongsTo == .thisMonth {
-                    validCell.dateLabel.textColor = UIColor.black
-                } else { //i.e. case it belongs to inDate or outDate
-                    validCell.dateLabel.textColor = UIColor.gray
-                }
+            if cellState.dateBelongsTo == .thisMonth {
+                validCell.dateLabel.textColor = UIColor.black
+            } else { //i.e. case it belongs to inDate or outDate
+                validCell.dateLabel.textColor = UIColor.gray
             }
         }
     }
@@ -118,11 +125,11 @@ class CalendarViewController: UIViewController {
         headerView.addSubview(daysOfWeekHeader)
         headerView.addSubview(addButton)
         view.addSubview(calendarView)
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         
         headerView.anchor(view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 130)
         
-        monthLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: headerView.leftAnchor, bottom: nil, right: addButton.leftAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 50)
+        monthLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: headerView.leftAnchor, bottom: nil, right: addButton.leftAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 50)
         
         addButton.anchor(monthLabel.topAnchor, left: nil, bottom: daysOfWeekHeader.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 50, heightConstant: 50)
         
@@ -131,7 +138,7 @@ class CalendarViewController: UIViewController {
         calendarView.anchor(headerView.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor)
         calendarView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         
-        tableView.anchor(calendarView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        collectionView.anchor(calendarView.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         
         calendarView.backgroundColor = .secondaryColor
         calendarView.register(CalendarCell.self, forCellWithReuseIdentifier: CalendarCell.reuseIdentifier)
@@ -147,7 +154,8 @@ class CalendarViewController: UIViewController {
     @objc
     func didTapAdd() {
         
-        
+        let newEvent = EventDetailViewController(event: nil)
+        present(newEvent, animated: true, completion: nil)
     }
 }
 
@@ -209,26 +217,65 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
     
 }
 
-extension CalendarViewController: UITableViewDataSource {
+extension CalendarViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func mockEvent() -> PlannerEvent {
+        let event = PlannerEvent()
+        event.startDate = Date()
+        event.endDate = Date().addDay(1)
+        event.notes = "• Lorem ipsum dolor\n• Sit amet, consectetur\n• Adipisicing elit, sed"
+        event.title = "Lorem Ipsum Dolor"
+        return event
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EventCell.reuseIdentifier, for: indexPath) as! EventCell
+        cell.controller = self
+        cell.dataSourceItem = mockEvent()
+        return cell
     }
 }
 
-extension CalendarViewController: UITableViewDelegate {
+extension CalendarViewController: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        let vc = EventDetailViewController(event: mockEvent())
+        vc.isHeroEnabled = true
+        isHeroEnabled = true
+        let cellId = UUID().uuidString
+        vc.cell.heroID = cellId
+        (collectionView.cellForItem(at: indexPath) as! EventCell).heroID = cellId
+        vc.tableView.heroModifiers = [.fade]
+        present(vc, animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        UIView.animate(withDuration: 0.3) {
+            cell.transform = CGAffineTransform(scaleX: 1.08, y: 1.08)
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowRadius = 3
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        UIView.animate(withDuration: 0.3) {
+            cell.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            cell.layer.shadowColor = UIColor.darkGray.cgColor
+            cell.layer.shadowRadius = 2
+        }
     }
 }

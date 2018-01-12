@@ -109,10 +109,20 @@ class TimerViewController: UIViewController {
         return label
     }()
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        title = "Timer"
+        tabBarItem = UITabBarItem(title: title, image: #imageLiteral(resourceName: "icon_timer"), tag: 0)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Timer"
+
         view.backgroundColor = .white
         
         let leftStackView = UIStackView(arrangedSubviews: [startLabel, startTimeLabel])
@@ -132,7 +142,7 @@ class TimerViewController: UIViewController {
         clock.anchor(labelsStackView.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor)
         clock.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         
-        startTimerButton.anchor(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 16, rightConstant: 16, widthConstant: 75, heightConstant: 75)
+        startTimerButton.anchor(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 46, rightConstant: 16, widthConstant: 75, heightConstant: 75)
         startTimerButton.layer.cornerRadius = 75 / 2
         
         endTimerButton.anchor(nil, left: nil, bottom: startTimerButton.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 16, rightConstant: 16, widthConstant: 75, heightConstant: 75)
@@ -189,7 +199,11 @@ class TimerViewController: UIViewController {
     @objc
     func didTapEndTimer() {
         
+        UIView.animate(withDuration: 0.3) {
+            self.endTimerButton.alpha = 0
+        }
         timer.invalidate()
+        AnimationClass.flipAnimation(startTimerButton) {}
         reload()
     }
     

@@ -19,7 +19,11 @@ extension UIColor {
     }
     
     static var tertiaryColor: UIColor {
-        return .red
+        return UIColor(hex: "B3E5FC")
+    }
+    
+    static var accentColor: UIColor {
+        return UIColor(hex: "D50000")
     }
     
 }
