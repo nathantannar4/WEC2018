@@ -1,50 +1,79 @@
 //
-//  NotesTableViewController.swift
-//  
+//  NoteTableViewController.swift
+//  WEC2018
 //
 //  Created by Shayne Kelly II on 2018-01-12.
+//  Copyright © 2018 Nathan Tannar. All rights reserved.
 //
 
 import UIKit
 
-class NotesTableViewController: UITableViewController {
-
+class NoteTableViewController: UITableViewController {
+    
+    //MARK: Properties
+    var notes = [Note]()
+    
+    @objc func didTapAdd() {
+        editNote(content: nil)
+    }
+    
+    private func editNote(content: String?) {
+        let newNoteViewController = NewNoteViewController()
+        newNoteViewController.contentString = content
+        self.navigationController?.pushViewController(newNoteViewController, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+        
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
+        
+        loadNotes()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func loadNotes() {
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return notes.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        self.title = "Notes"
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath) as! NoteTableViewCell
+        
+        let note = notes[indexPath.row]
+        cell.contentLabel.text = note.content
+        cell.dateLabel.text = note.date?.timeElapsedDescription()
 
         // Configure the cell...
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editNote(content: notes[indexPath.row].content)
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.notes.count;
+    }
 
     /*
     // Override to support conditional editing of the table view.

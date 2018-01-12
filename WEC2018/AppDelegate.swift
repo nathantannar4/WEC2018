@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let viewControllers = [
+            UINavigationController(rootViewController: NoteTableViewController()),
             TimerViewController(),
             CalendarViewController()
         ]
@@ -66,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PlannerEvent.registerSubclass()
         Task.registerSubclass()
+        Note.registerSubclass()
         
         Parse.enableLocalDatastore()
         Parse.initialize(with: API.configuration())
