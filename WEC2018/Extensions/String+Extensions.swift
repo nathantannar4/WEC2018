@@ -37,24 +37,3 @@ public extension String {
     }
 }
 
-extension String: Searchable {
-    
-    public var id: String {
-        return self
-    }
-    
-    public var category: String? {
-        return nil
-    }
-    
-    public var searchText: String {
-        return self
-    }
-    
-    public var detailText: String? {
-        return nil
-    }
-    
-    
-    
-}
