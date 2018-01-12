@@ -13,6 +13,9 @@
 		269CA4E7200934140024DB11 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA4E4200934130024DB11 /* Note.swift */; };
 		269CA4E920093B7B0024DB11 /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA4E820093B7B0024DB11 /* NewNoteViewController.swift */; };
 		269CA4ED20093F560024DB11 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA4EC20093F560024DB11 /* NewNoteView.swift */; };
+		269CA4EF2009561E0024DB11 /* TodoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA4EE2009561E0024DB11 /* TodoTableViewController.swift */; };
+		269CA4F120095D8A0024DB11 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA4F020095D8A0024DB11 /* Task.swift */; };
+		269CA4F320095E1E0024DB11 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA4F220095E1E0024DB11 /* TaskTableViewCell.swift */; };
 		3824463B20092E6F005B2F8C /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824463A20092E6F005B2F8C /* CalendarHeader.swift */; };
 		385E7FC920092149003412F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FC820092149003412F3 /* AppDelegate.swift */; };
 		385E7FCB20092149003412F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FCA20092149003412F3 /* ViewController.swift */; };
@@ -45,6 +48,9 @@
 		269CA4E4200934130024DB11 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		269CA4E820093B7B0024DB11 /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
 		269CA4EC20093F560024DB11 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
+		269CA4EE2009561E0024DB11 /* TodoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewController.swift; sourceTree = "<group>"; };
+		269CA4F020095D8A0024DB11 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		269CA4F220095E1E0024DB11 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		29E99349FA9C22AFC6CCB654 /* Pods-WEC2018.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WEC2018.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WEC2018/Pods-WEC2018.debug.xcconfig"; sourceTree = "<group>"; };
 		3824463A20092E6F005B2F8C /* CalendarHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeader.swift; sourceTree = "<group>"; };
 		385E7FC520092149003412F3 /* WEC2018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WEC2018.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +123,9 @@
 				269CA4E3200934130024DB11 /* NoteTableViewController.swift */,
 				269CA4E820093B7B0024DB11 /* NewNoteViewController.swift */,
 				269CA4EC20093F560024DB11 /* NewNoteView.swift */,
+				269CA4EE2009561E0024DB11 /* TodoTableViewController.swift */,
+				269CA4F220095E1E0024DB11 /* TaskTableViewCell.swift */,
+				269CA4F020095D8A0024DB11 /* Task.swift */,
 				385E7FD7200923FC003412F3 /* CalendarViewController.swift */,
 				38B1D27D200926E80073D3A1 /* CalendarCell.swift */,
 				3824463A20092E6F005B2F8C /* CalendarHeader.swift */,
@@ -324,7 +333,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				269CA4F120095D8A0024DB11 /* Task.swift in Sources */,
 				3824463B20092E6F005B2F8C /* CalendarHeader.swift in Sources */,
+				269CA4F320095E1E0024DB11 /* TaskTableViewCell.swift in Sources */,
 				385E7FE82009248D003412F3 /* UIApplication+Extensions.swift in Sources */,
 				385E7FF520092496003412F3 /* Constants.swift in Sources */,
 				269CA4E920093B7B0024DB11 /* NewNoteViewController.swift in Sources */,
@@ -349,6 +360,7 @@
 				385E7FC920092149003412F3 /* AppDelegate.swift in Sources */,
 				269CA4E6200934140024DB11 /* NoteTableViewController.swift in Sources */,
 				38B1D28620092D010073D3A1 /* Animation.swift in Sources */,
+				269CA4EF2009561E0024DB11 /* TodoTableViewController.swift in Sources */,
 				269CA4ED20093F560024DB11 /* NewNoteView.swift in Sources */,
 				385E7FF620092496003412F3 /* Stylesheet.swift in Sources */,
 			);
