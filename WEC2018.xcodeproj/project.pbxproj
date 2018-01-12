@@ -12,6 +12,7 @@
 		385E7FCB20092149003412F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FCA20092149003412F3 /* ViewController.swift */; };
 		385E7FCD20092149003412F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E7FCC20092149003412F3 /* Assets.xcassets */; };
 		385E7FD020092149003412F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385E7FCE20092149003412F3 /* LaunchScreen.storyboard */; };
+		385E7FD8200923FC003412F3 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FD7200923FC003412F3 /* CalendarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		385E7FCC20092149003412F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		385E7FCF20092149003412F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		385E7FD120092149003412F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		385E7FD7200923FC003412F3 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		684AA71A8A2B4149F63BE209 /* Pods-WEC2018.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WEC2018.release.xcconfig"; path = "Pods/Target Support Files/Pods-WEC2018/Pods-WEC2018.release.xcconfig"; sourceTree = "<group>"; };
 		886ECEC94F383D8DE8A7BBDD /* Pods_WEC2018.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WEC2018.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -61,6 +63,7 @@
 			children = (
 				385E7FC820092149003412F3 /* AppDelegate.swift */,
 				385E7FCA20092149003412F3 /* ViewController.swift */,
+				385E7FD7200923FC003412F3 /* CalendarViewController.swift */,
 				385E7FCC20092149003412F3 /* Assets.xcassets */,
 				385E7FCE20092149003412F3 /* LaunchScreen.storyboard */,
 				385E7FD120092149003412F3 /* Info.plist */,
@@ -233,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385E7FD8200923FC003412F3 /* CalendarViewController.swift in Sources */,
 				385E7FCB20092149003412F3 /* ViewController.swift in Sources */,
 				385E7FC920092149003412F3 /* AppDelegate.swift in Sources */,
 			);
