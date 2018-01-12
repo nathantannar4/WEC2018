@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B2F84762118D7574A87EBF9821252683"
+               BlueprintIdentifier = "6299005534C019E06A273267FB7003F0"
                BuildableName = "SwiftyPickerPopover.framework"
                BlueprintName = "SwiftyPickerPopover"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B2F84762118D7574A87EBF9821252683"
+            BlueprintIdentifier = "6299005534C019E06A273267FB7003F0"
             BuildableName = "SwiftyPickerPopover.framework"
             BlueprintName = "SwiftyPickerPopover"
             ReferencedContainer = "container:Pods.xcodeproj">

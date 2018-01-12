@@ -11,6 +11,7 @@ target 'WEC2018' do
   pod 'AlertHUDKit'
   pod 'ViewAnimator'
   pod 'SwiftyPickerPopover', :git => 'https://github.com/hsylife/SwiftyPickerPopover', :branch => 'swift4'
+  pod '10Clock'
 
   pod 'Parse'
   pod 'ParseUI'

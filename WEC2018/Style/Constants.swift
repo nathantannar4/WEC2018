@@ -11,7 +11,7 @@ import UIKit
 extension UIColor {
     
     static var primaryColor: UIColor {
-        return .red
+        return UIColor(hex: "0288D1")
     }
     
     static var secondaryColor: UIColor {

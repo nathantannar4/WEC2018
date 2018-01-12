@@ -1,0 +1,6 @@
+framework module _10Clock {
+  umbrella header "10Clock-umbrella.h"
+
+  export *
+  module * { export * }
+}
