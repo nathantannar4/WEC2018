@@ -32,9 +32,9 @@ open class TenClock : UIControl{
     //overall inset. Controls all sizes.
     @IBInspectable var insetAmount: CGFloat = 40
     var internalShift: CGFloat = 5;
-    var pathWidth:CGFloat = 54
+    var pathWidth:CGFloat = 50
 
-    var timeStepSize: CGFloat = 5
+    var timeStepSize: Double = 1
     let gradientLayer = CAGradientLayer()
     let trackLayer = CAShapeLayer()
     let pathLayer = CAShapeLayer()
@@ -108,6 +108,9 @@ open class TenClock : UIControl{
     open var headBackgroundColor = UIColor.white.withAlphaComponent(0.8)
     open var tailBackgroundColor = UIColor.white.withAlphaComponent(0.8)
 
+    open var headText: String = "Start"
+    open var tailText: String = "End"
+
     open var headTextColor = UIColor.black
     open var tailTextColor = UIColor.black
 
@@ -149,12 +152,12 @@ open class TenClock : UIControl{
 //        return calendar.dateByAddingComponents(comps, toDate: Date().startOfDay as Date, options: .init(rawValue:0))!
     }
     open var startDate: Date{
-        get{return angleToTime(headAngle) }
-        set{ headAngle = timeToAngle(newValue) }
-    }
-    open var endDate: Date{
         get{return angleToTime(tailAngle) }
         set{ tailAngle = timeToAngle(newValue) }
+    }
+    open var endDate: Date{
+        get{return angleToTime(headAngle) }
+        set{ headAngle = timeToAngle(newValue) }
     }
 
     var internalRadius:CGFloat {
@@ -195,7 +198,7 @@ open class TenClock : UIControl{
         let components = self.calendar.dateComponents(units, from: date)
         let min = Double(  60 * components.hour! + components.minute! )
 
-        return medStepFunction(CGFloat(Double.pi / 2 - ( min / (12 * 60)) * 2 * Double.pi), stepSize: CGFloat( 2 * Double.pi / (12 * 60 / 5)))
+        return medStepFunction(CGFloat(Double.pi / 2 - ( min / (12 * 60)) * 2 * Double.pi), stepSize: CGFloat( 2 * Double.pi / (12 * 60 / timeStepSize)))
     }
 
     // input an angle, output: 0 to 4pi
@@ -243,8 +246,8 @@ open class TenClock : UIControl{
     func updateGradientLayer() {
 
         gradientLayer.colors =
-            [tintColor,
-                tintColor.modified(withAdditionalHue: -0.08, additionalSaturation: 0.15, additionalBrightness: 0.2)]
+            [tintColor.lighter(by: 10),
+                tintColor.darker(by: 10)]
                 .map(disabledFormattedColor)
                 .map{$0.cgColor}
         gradientLayer.mask = overallPathLayer
@@ -315,8 +318,8 @@ open class TenClock : UIControl{
         topTailLayer.fillColor = disabledFormattedColor(tailBackgroundColor).cgColor
         topHeadLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
         topTailLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
-        let stText = tlabel("Start", color: disabledFormattedColor(headTextColor))
-        let endText = tlabel("End",color: disabledFormattedColor(tailTextColor))
+        let stText = tlabel(headText, color: disabledFormattedColor(headTextColor))
+        let endText = tlabel(tailText, color: disabledFormattedColor(tailTextColor))
         stText.position = topTailLayer.center
         endText.position = topHeadLayer.center
         topHeadLayer.addSublayer(endText)
@@ -346,18 +349,17 @@ open class TenClock : UIControl{
         }
     }
     func updateWatchFaceTitle(){
-        let f = UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1)
-        let cgFont = CTFontCreateWithName((f.fontName as CFString?)!, f.pointSize/2,nil)
+        let f = UIFont.systemFont(ofSize: 20, weight: .medium)
 //        let titleTextLayer = CATextLayer()
         titleTextLayer.bounds.size = CGSize( width: titleTextInset.size.width, height: 50)
         titleTextLayer.fontSize = f.pointSize
         titleTextLayer.alignmentMode = kCAAlignmentCenter
         titleTextLayer.foregroundColor = disabledFormattedColor(centerTextColor ?? tintColor).cgColor
         titleTextLayer.contentsScale = UIScreen.main.scale
-        titleTextLayer.font = cgFont
+        titleTextLayer.font = f
         //var computedTailAngle = tailAngle //+ (headAngle > tailAngle ? twoPi : 0)
         //computedTailAngle +=  (headAngle > computedTailAngle ? twoPi : 0)
-        var fiveMinIncrements = Int( ((tailAngle - headAngle) / twoPi) * 12 /*hrs*/ * 12 /*5min increments*/)
+        var fiveMinIncrements = Int(Double( ((tailAngle - headAngle) / twoPi) * 12 /*hrs*/ * 12 /*5min increments*/).rounded())
         if fiveMinIncrements < 0 {
             print("tenClock:Err: is negative")
             fiveMinIncrements += (24 * (60/5))

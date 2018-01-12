@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let viewControllers = [
+            TimerViewController(),
             CalendarViewController()
         ]
         

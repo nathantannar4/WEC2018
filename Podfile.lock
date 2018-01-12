@@ -1,5 +1,4 @@
 PODS:
-  - 10Clock (0.0.20)
   - AlertHUDKit (1.0.0)
   - BiometricAuthentication (1.0.2)
   - Bolts-Swift (1.3.0)
@@ -19,7 +18,6 @@ PODS:
   - ViewAnimator (1.0.2)
 
 DEPENDENCIES:
-  - 10Clock
   - AlertHUDKit
   - BiometricAuthentication
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift.git`, branch `master`)
@@ -47,7 +45,6 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hsylife/SwiftyPickerPopover
 
 SPEC CHECKSUMS:
-  10Clock: 2a4041365787259a1311cd089695550291a063d2
   AlertHUDKit: 2686ae78f2f1fe6455f117d7e93e1e7731780fec
   BiometricAuthentication: e14b081ea7c59c6c4ee8b54f26489ce9d737ba51
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -60,6 +57,6 @@ SPEC CHECKSUMS:
   SwiftyPickerPopover: a0599689c09b7ec97d287271d755c22506d848cb
   ViewAnimator: d7b18e0be98e05807f61ad886a36363727209377
 
-PODFILE CHECKSUM: 4cf5d6289efb71c524c48c80870d93d92f328f10
+PODFILE CHECKSUM: bffdcd2e8dc65a9734447a8bd8f5213cbed120e3
 
 COCOAPODS: 1.3.1

@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		04397693C31D59D2122B4D25 /* Pods_WEC2018.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 886ECEC94F383D8DE8A7BBDD /* Pods_WEC2018.framework */; };
-		3824463F20093F95005B2F8C /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824463E20093F95005B2F8C /* ClockViewController.swift */; };
+		3824463F20093F95005B2F8C /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824463E20093F95005B2F8C /* TimerViewController.swift */; };
+		3824464520094140005B2F8C /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446402009413F005B2F8C /* Clock.swift */; };
+		3824464620094140005B2F8C /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446412009413F005B2F8C /* DateExtensions.swift */; };
+		3824464720094140005B2F8C /* AvoidingSubviewScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446422009413F005B2F8C /* AvoidingSubviewScrollViewDelegate.swift */; };
+		3824464820094140005B2F8C /* CoreAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382446432009413F005B2F8C /* CoreAnimation.swift */; };
+		3824464920094140005B2F8C /* CoreGraphicsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3824464420094140005B2F8C /* CoreGraphicsExtensions.swift */; };
 		385E7FC920092149003412F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FC820092149003412F3 /* AppDelegate.swift */; };
 		385E7FCB20092149003412F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FCA20092149003412F3 /* ViewController.swift */; };
 		385E7FCD20092149003412F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E7FCC20092149003412F3 /* Assets.xcassets */; };
@@ -36,7 +41,12 @@
 
 /* Begin PBXFileReference section */
 		29E99349FA9C22AFC6CCB654 /* Pods-WEC2018.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WEC2018.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WEC2018/Pods-WEC2018.debug.xcconfig"; sourceTree = "<group>"; };
-		3824463E20093F95005B2F8C /* ClockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
+		3824463E20093F95005B2F8C /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
+		382446402009413F005B2F8C /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		382446412009413F005B2F8C /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		382446422009413F005B2F8C /* AvoidingSubviewScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvoidingSubviewScrollViewDelegate.swift; sourceTree = "<group>"; };
+		382446432009413F005B2F8C /* CoreAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreAnimation.swift; sourceTree = "<group>"; };
+		3824464420094140005B2F8C /* CoreGraphicsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphicsExtensions.swift; sourceTree = "<group>"; };
 		385E7FC520092149003412F3 /* WEC2018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WEC2018.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		385E7FC820092149003412F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		385E7FCA20092149003412F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,9 +102,22 @@
 		3824463D20093E25005B2F8C /* Clock */ = {
 			isa = PBXGroup;
 			children = (
-				3824463E20093F95005B2F8C /* ClockViewController.swift */,
+				3824464A20094144005B2F8C /* 10Clock */,
+				3824463E20093F95005B2F8C /* TimerViewController.swift */,
 			);
 			path = Clock;
+			sourceTree = "<group>";
+		};
+		3824464A20094144005B2F8C /* 10Clock */ = {
+			isa = PBXGroup;
+			children = (
+				382446422009413F005B2F8C /* AvoidingSubviewScrollViewDelegate.swift */,
+				382446402009413F005B2F8C /* Clock.swift */,
+				382446432009413F005B2F8C /* CoreAnimation.swift */,
+				3824464420094140005B2F8C /* CoreGraphicsExtensions.swift */,
+				382446412009413F005B2F8C /* DateExtensions.swift */,
+			);
+			path = 10Clock;
 			sourceTree = "<group>";
 		};
 		385E7FBC20092149003412F3 = {
@@ -287,7 +310,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WEC2018/Pods-WEC2018-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/10Clock/_10Clock.framework",
 				"${BUILT_PRODUCTS_DIR}/AlertHUDKit/AlertHUDKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BiometricAuthentication/BiometricAuthentication.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework",
@@ -302,7 +324,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/_10Clock.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlertHUDKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BiometricAuthentication.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoltsSwift.framework",
@@ -332,21 +353,26 @@
 				385E7FE92009248D003412F3 /* NSAttributedString+Extensions.swift in Sources */,
 				385E7FF420092496003412F3 /* UIView+Style.swift in Sources */,
 				385E7FEB2009248D003412F3 /* UIViewController+Extensions.swift in Sources */,
+				3824464620094140005B2F8C /* DateExtensions.swift in Sources */,
 				385E7FEE2009248D003412F3 /* Date+Extensions.swift in Sources */,
 				385E7FEC2009248D003412F3 /* UIAlertController+Extensions.swift in Sources */,
 				385E7FD8200923FC003412F3 /* CalendarViewController.swift in Sources */,
+				3824464720094140005B2F8C /* AvoidingSubviewScrollViewDelegate.swift in Sources */,
 				385E7FE72009248D003412F3 /* UIView+AutoLayout.swift in Sources */,
 				385E7FEA2009248D003412F3 /* UIButton+Extensions.swift in Sources */,
 				38B1D27E200926E80073D3A1 /* CalendarCell.swift in Sources */,
 				385E7FE52009248D003412F3 /* UIDevice+Extensions.swift in Sources */,
 				385E7FE62009248D003412F3 /* UIImage+Extensions.swift in Sources */,
+				3824464820094140005B2F8C /* CoreAnimation.swift in Sources */,
 				38B1D28420092CF80073D3A1 /* AnimationClass.swift in Sources */,
+				3824464920094140005B2F8C /* CoreGraphicsExtensions.swift in Sources */,
 				385E7FF02009248D003412F3 /* String+Extensions.swift in Sources */,
-				3824463F20093F95005B2F8C /* ClockViewController.swift in Sources */,
+				3824463F20093F95005B2F8C /* TimerViewController.swift in Sources */,
 				385E7FED2009248D003412F3 /* UIWindow+Extenions.swift in Sources */,
 				385E7FEF2009248D003412F3 /* UIColor+Extensions.swift in Sources */,
 				385E7FCB20092149003412F3 /* ViewController.swift in Sources */,
 				385E7FC920092149003412F3 /* AppDelegate.swift in Sources */,
+				3824464520094140005B2F8C /* Clock.swift in Sources */,
 				38B1D28620092D010073D3A1 /* Animation.swift in Sources */,
 				385E7FF620092496003412F3 /* Stylesheet.swift in Sources */,
 			);
