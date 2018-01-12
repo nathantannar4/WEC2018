@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +17,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        connectToParseServer()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: TodoTableViewController())
+        
+        let viewControllers = [
+            UINavigationController(rootViewController: NoteTableViewController()),
+            TimerViewController(),
+            CalendarViewController()
+        ]
+        
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.barTintColor = .white
+        tabBarController.tabBar.tintColor = .primaryColor
+        tabBarController.setViewControllers(viewControllers, animated: false)
+        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
                 
         return true
@@ -44,7 +62,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func connectToParseServer() {
+        
+        PlannerEvent.registerSubclass()
+        Task.registerSubclass()
+        Note.registerSubclass()
+        
+        Parse.enableLocalDatastore()
+        Parse.initialize(with: API.configuration())
+    }
 
+}
 
+class API {
+    
+    class func configuration() -> ParseClientConfiguration {
+        return ParseClientConfiguration(block: {
+            $0.applicationId = "758c0e8286b1ea728d6f941f2f6e3fe4db49cef8"
+            $0.clientKey = "6fa4e837b886f5a0b7fc902c31cac8fa6b37a31e"
+            $0.server = "https://nathantannar.me/api/sand"
+        })
+    }
 }
 

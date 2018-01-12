@@ -3,6 +3,7 @@ PODS:
   - BiometricAuthentication (1.0.2)
   - Bolts-Swift (1.3.0)
   - Bolts/Tasks (1.9.0)
+  - Hero (1.0.1)
   - JTAppleCalendar (7.1.5)
   - Parse (1.15.3):
     - Bolts/Tasks (~> 1.8)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - AlertHUDKit
   - BiometricAuthentication
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift.git`, branch `master`)
+  - Hero
   - JTAppleCalendar
   - Parse
   - ParseLiveQuery
@@ -49,6 +51,7 @@ SPEC CHECKSUMS:
   BiometricAuthentication: e14b081ea7c59c6c4ee8b54f26489ce9d737ba51
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
+  Hero: cee286821578e170d8c0c9c9cda7897357401112
   JTAppleCalendar: 2d4f974f9f3c8b4964d51ca1f6e004883c031fbe
   Parse: cdc0f1f975ee8be0409e66f21b05df4ae067047c
   ParseLiveQuery: 6ca715827fa2bfb9df7b3d647f512c3d1d42da81
@@ -57,6 +60,6 @@ SPEC CHECKSUMS:
   SwiftyPickerPopover: a0599689c09b7ec97d287271d755c22506d848cb
   ViewAnimator: d7b18e0be98e05807f61ad886a36363727209377
 
-PODFILE CHECKSUM: bffdcd2e8dc65a9734447a8bd8f5213cbed120e3
+PODFILE CHECKSUM: 1d7f789ea475ed6f2455e49b8f45ef78ced877ef
 
 COCOAPODS: 1.3.1

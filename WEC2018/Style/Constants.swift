@@ -11,7 +11,7 @@ import UIKit
 extension UIColor {
     
     static var primaryColor: UIColor {
-        return .red
+        return UIColor(hex: "0288D1")
     }
     
     static var secondaryColor: UIColor {
@@ -19,7 +19,11 @@ extension UIColor {
     }
     
     static var tertiaryColor: UIColor {
-        return .red
+        return UIColor(hex: "B3E5FC")
+    }
+    
+    static var accentColor: UIColor {
+        return UIColor(hex: "D50000")
     }
     
 }
