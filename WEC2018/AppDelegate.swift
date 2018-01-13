@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             window?.rootViewController = Router.controllerFor(.welcome)
         }
-        addSecurityBlurEffect()
         window?.makeKeyAndVisible()
                 
         return true
@@ -51,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         
+        addSecurityBlurEffect()
         toggleSecurityBlur(isLocked: true)
     }
     

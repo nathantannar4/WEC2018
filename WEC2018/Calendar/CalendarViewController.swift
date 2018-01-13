@@ -16,6 +16,16 @@ class CalendarViewController: UIViewController {
     
     var events = [PlannerEvent]()
     
+    var selectedEvents = [PlannerEvent]() { didSet { collectionView.reloadData() } }
+    
+    lazy var eventsQuery: PFQuery<PlannerEvent> = {
+        return PlannerEvent.query()?.whereKey("user", equalTo: PFUser.current() ?? "").includeKey("user").addDescendingOrder("updatedAt") as! PFQuery<PlannerEvent>
+    }()
+    
+    var subscription: Subscription<PlannerEvent>? = nil
+    
+    var client: Client?
+    
     var headerView: UIView = {
         let view = UIView()
         view.backgroundColor = .primaryColor
@@ -40,7 +50,7 @@ class CalendarViewController: UIViewController {
     }()
     
     var daysOfWeekHeader: UIStackView = {
-        let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+        let days = ["Mon","Tue","Wed","Thu","Fri","Sat", "Sun"]
         let dayLabels: [UILabel] = days.map {
             let label = UILabel()
             label.font = .boldSystemFont(ofSize: 15)
@@ -88,14 +98,6 @@ class CalendarViewController: UIViewController {
         return collectionView
     }()
     
-    lazy var eventsQuery: PFQuery<PlannerEvent> = {
-        return PlannerEvent.query()?.whereKey("user", equalTo: PFUser.current() ?? "").includeKey("user").addDescendingOrder("updatedAt") as! PFQuery<PlannerEvent>
-    }()
-    
-    var subscription: Subscription<PlannerEvent>? = nil
-    
-    var client: Client?
-    
     init() {
         super.init(nibName: nil, bundle: nil)
         title = "Calendar"
@@ -112,15 +114,17 @@ class CalendarViewController: UIViewController {
         
         view.backgroundColor = .white
         setupCalendarView()
+        loadEvents()
     }
     
-    private func loadEvent() {
+    private func loadEvents() {
         
         eventsQuery.findObjectsInBackground(block: { (objects, error) in
-            guard let objects = objects as? [PlannerEvent] else {
+            guard let objects = objects else {
                 self.handleError(error?.localizedDescription)
                 return
             }
+            print(objects)
             self.events = objects
             self.calendarView.reloadData()
         })
@@ -132,30 +136,30 @@ class CalendarViewController: UIViewController {
         
         navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
         
-//        if subscription != nil { return }
-//        subscription = Client.shared.subscribe(notesQuery)
-//        subscription?.handle(Event.created) { query, note in
-//            DispatchQueue.main.sync {
-//                self.notes.insert(note, at: 0)
-//                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-//            }
-//        }
-//        subscription?.handle(Event.updated) { query, note in
-//            DispatchQueue.main.sync {
-//                if let index = self.notes.index(where: { return $0.objectId == note.objectId }) {
-//                    self.notes[index] = note
-//                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-//                }
-//            }
-//        }
-//        subscription?.handle(Event.deleted) { query, note in
-//            DispatchQueue.main.sync {
-//                if let index = self.notes.index(where: { return $0.objectId == note.objectId }) {
-//                    self.notes.remove(at: index)
-//                    self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-//                }
-//            }
-//        }
+        guard subscription == nil else { return }
+        subscription = Client.shared.subscribe(eventsQuery)
+        subscription?.handle(Event.created) { query, event in
+            DispatchQueue.main.sync {
+                self.events.append(event)
+                self.calendarView.reloadData()
+            }
+        }
+        subscription?.handle(Event.updated) { query, event in
+            DispatchQueue.main.sync {
+                if let index = self.events.index(where: { return $0.objectId == event.objectId }) {
+                    self.events[index] = event
+                    self.calendarView.reloadData()
+                }
+            }
+        }
+        subscription?.handle(Event.deleted) { query, event in
+            DispatchQueue.main.sync {
+                if let index = self.events.index(where: { return $0.objectId == event.objectId }) {
+                    self.events.remove(at: index)
+                    self.calendarView.reloadData()
+                }
+            }
+        }
     }
     
     func handleCellTextColor(cell: JTAppleCell?, cellState: CellState){
@@ -203,14 +207,16 @@ class CalendarViewController: UIViewController {
         calendarView.showsHorizontalScrollIndicator = false
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
-        calendarView.selectDates([Date()], triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: false)
-        monthLabel.text = Date().monthNameFull.capitalized
+        calendarView.scrollToDate(Date())
+        monthLabel.text = Date().monthNameFull.capitalized + " " + Date().yearFourDigit
     }
     
     @objc
     func didTapAdd() {
         
-        let vc = EventDetailViewController(event: nil)
+        let event = PlannerEvent()
+        event.user = PFUser.current()
+        let vc = EventDetailViewController(event: event)
         present(vc, animated: true, completion: nil)
     }
 }
@@ -219,18 +225,16 @@ extension CalendarViewController: JTAppleCalendarViewDataSource {
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         
-        let persianCalendar = Calendar(identifier: .persian)
-        
         let testFotmatter = DateFormatter()
         testFotmatter.dateFormat = "yyyy/MM/dd"
-        testFotmatter.timeZone = persianCalendar.timeZone
-        testFotmatter.locale = persianCalendar.locale
+        testFotmatter.timeZone = Calendar.current.timeZone
+        testFotmatter.locale = Calendar.current.locale
         
-        let startDate = testFotmatter.date(from: "2000/01/01")!
+        let startDate = Date()
         let endDate = testFotmatter.date(from: "2030/12/30")!
         
         
-        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate, numberOfRows: nil, calendar: persianCalendar, generateInDates: nil, generateOutDates: nil, firstDayOfWeek: nil, hasStrictBoundaries: nil)
+        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate, numberOfRows: nil, calendar: Calendar.current, generateInDates: nil, generateOutDates: nil, firstDayOfWeek: nil, hasStrictBoundaries: nil)
         
         return parameters
     }
@@ -238,7 +242,7 @@ extension CalendarViewController: JTAppleCalendarViewDataSource {
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         
         guard let date = visibleDates.monthDates.first else { return }
-        monthLabel.text = date.date.monthNameFull.capitalized
+        monthLabel.text = date.date.monthNameFull.capitalized + " " + date.date.yearFourDigit
     }
     
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
@@ -246,6 +250,11 @@ extension CalendarViewController: JTAppleCalendarViewDataSource {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: CalendarCell.reuseIdentifier, for: indexPath) as! CalendarCell
         cell.dateLabel.text = cellState.text
         
+        let dayEvents = events.filter {
+            guard let start = $0.startDate else { return false }
+            return start.isInSameDay(date: date)
+        }
+        cell.eventIcon.isHidden = dayEvents.count == 0
 
         handleCellTextColor(cell: cell, cellState: cellState)
         
@@ -259,10 +268,16 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
         
         let cell = cell as! CalendarCell
         cell.dateLabel.text = cellState.text
+        
         handleCellTextColor(cell: cell, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        
+        selectedEvents = events.filter {
+            guard let start = $0.startDate else { return false }
+            return start.isInSameDay(date: date)
+        }
         
         handleCellTextColor(cell: cell, cellState: cellState)
     }
@@ -275,28 +290,19 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
 
 extension CalendarViewController: UICollectionViewDataSource {
     
-    func mockEvent() -> PlannerEvent {
-        let event = PlannerEvent()
-        event.startDate = Date()
-        event.endDate = Date().addDay(1)
-        event.notes = "• Lorem ipsum dolor\n• Sit amet, consectetur\n• Adipisicing elit, sed"
-        event.title = "Lorem Ipsum Dolor"
-        return event
-    }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return selectedEvents.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EventCell.reuseIdentifier, for: indexPath) as! EventCell
         cell.controller = self
-        cell.dataSourceItem = mockEvent()
+        cell.dataSourceItem = selectedEvents[indexPath.row]
         return cell
     }
 }
@@ -305,7 +311,7 @@ extension CalendarViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let vc = EventDetailViewController(event: mockEvent())
+        let vc = EventDetailViewController(event: selectedEvents[indexPath.row])
         vc.isHeroEnabled = true
         isHeroEnabled = true
         let cellId = UUID().uuidString

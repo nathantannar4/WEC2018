@@ -60,10 +60,13 @@ class NoteTableViewController: UITableViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
         
         subscription = Client.shared.subscribe(notesQuery)
         subscription?.handle(Event.created) { query, note in

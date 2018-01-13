@@ -58,19 +58,16 @@ class EventDetailViewController: UIViewController {
     
     // MARK: - Initialization
     
-    init(event: PlannerEvent? = nil) {
+    init(event: PlannerEvent) {
         super.init(nibName: nil, bundle: nil)
-        if event == nil {
-            self.event = PlannerEvent()
-            self.event?.user = PFUser.current()
+        cell.dataSourceItem = event
+        if event.objectId == nil {
             tableView.isHidden = true
             cell.dateLabel.text = "Date"
             cell.timeLabel.text = "Time"
             cell.lengthLabel.text = "Duration"
-        } else {
-            self.event = event
-            cell.dataSourceItem = event
         }
+        self.event = event
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -182,9 +179,11 @@ class EventDetailViewController: UIViewController {
         
         DatePickerPopover(title: "Time")
             .setDateMode(.time)
+            .setLocale(Calendar.current.locale!)
             .setMinuteInterval(5)
             .setDoneButton(title: "Save", color: .primaryColor, action: { popover, date in
                 // Update
+                self.event?.endDate = date
                 self.cell.timeLabel.text = date.string(dateStyle: .none, timeStyle: .short)
             })
             .setCancelButton(title: "Cancel", color: .darkGray, action: nil)
@@ -195,11 +194,12 @@ class EventDetailViewController: UIViewController {
     func showDatePicker() {
         
         DatePickerPopover(title: "Day")
-            .setMinimumDate(Date())
             .setDateMode(.date)
+            .setLocale(Calendar.current.locale!)
             .setSelectedDate(Date())
             .setDoneButton(title: "Save", color: .primaryColor, action: { popover, date in
                 // Update
+                self.event?.startDate = date
                 self.cell.dateLabel.text = "\(date.monthNameShort) \(date.dayTwoDigit_Int), \(date.yearFourDigit)"
             })
             .setCancelButton(title: "Cancel", color: .darkGray, action: nil)
@@ -213,20 +213,21 @@ class EventDetailViewController: UIViewController {
             .setSelectedTimeInterval(TimeInterval())
             .setDoneButton(title: "Save", color: .primaryColor, action: { [weak self] popover, timeInterval in
                 // Update
-                if let startDate = self?.event?.startDate {
-                    let endDate = Date(timeInterval: timeInterval, since: startDate)
-                    let seconds = endDate.timeIntervalSince(startDate)
-                    let minutes = seconds / 60
-                    if minutes < 60 {
-                        self?.cell.lengthLabel.text = "\(Int(minutes)) Minutes"
+                let startDate = self?.event?.startDate ?? Date()
+                self?.event?.startDate = startDate
+                let endDate = Date(timeInterval: timeInterval, since: startDate)
+                self?.event?.endDate = endDate
+                let seconds = endDate.timeIntervalSince(startDate)
+                let minutes = seconds / 60
+                if minutes < 60 {
+                    self?.cell.lengthLabel.text = "\(Int(minutes)) Minutes"
+                } else {
+                    let hours = minutes / 60
+                    let remainingMinutes = Int((hours - Double(Int(hours))) * 60)
+                    if remainingMinutes > 0 {
+                        self?.cell.lengthLabel.text = "\(Int(hours)) Hours\n\(remainingMinutes) Minutes"
                     } else {
-                        let hours = minutes / 60
-                        let remainingMinutes = Int((hours - Double(Int(hours))) * 60)
-                        if remainingMinutes > 0 {
-                            self?.cell.lengthLabel.text = "\(Int(hours)) Hours\n\(remainingMinutes) Minutes"
-                        } else {
-                            self?.cell.lengthLabel.text = "\(Int(hours)) Hours"
-                        }
+                        self?.cell.lengthLabel.text = "\(Int(hours)) Hours"
                     }
                 }
             })

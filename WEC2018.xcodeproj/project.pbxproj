@@ -138,9 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				385E7FD7200923FC003412F3 /* CalendarViewController.swift */,
+				3824465C20096816005B2F8C /* EventDetailViewController.swift */,
 				38B1D27D200926E80073D3A1 /* CalendarCell.swift */,
 				382446522009639D005B2F8C /* EventCell.swift */,
-				3824465C20096816005B2F8C /* EventDetailViewController.swift */,
 				38B1D28320092CF80073D3A1 /* AnimationClass.swift */,
 				38B1D28520092D000073D3A1 /* Animation.swift */,
 				3824464E200961FD005B2F8C /* GradientView.swift */,
