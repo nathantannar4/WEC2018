@@ -19,7 +19,7 @@ class CalendarViewController: UIViewController {
     var selectedEvents = [PlannerEvent]() { didSet { collectionView.reloadData() } }
     
     lazy var eventsQuery: PFQuery<PlannerEvent> = {
-        return PlannerEvent.query()?.whereKey("user", equalTo: PFUser.current() ?? "").includeKey("user").addDescendingOrder("updatedAt") as! PFQuery<PlannerEvent>
+        return PlannerEvent.query()?.whereKey("user", equalTo: PFUser.current() ?? "").includeKey("user").includeKey("tasks").addDescendingOrder("updatedAt") as! PFQuery<PlannerEvent>
     }()
     
     var subscription: Subscription<PlannerEvent>? = nil
@@ -114,7 +114,6 @@ class CalendarViewController: UIViewController {
         
         view.backgroundColor = .white
         setupCalendarView()
-        loadEvents()
     }
     
     private func loadEvents() {
@@ -134,6 +133,8 @@ class CalendarViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        loadEvents()
+        collectionView.reloadData()
         navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
         
         guard subscription == nil else { return }
@@ -215,6 +216,8 @@ class CalendarViewController: UIViewController {
         
         let event = PlannerEvent()
         event.user = PFUser.current()
+        event.startDate = Date()
+        event.endDate = Date().addSec(3600)
         let vc = EventDetailViewController(event: event)
         present(vc, animated: true, completion: nil)
     }
