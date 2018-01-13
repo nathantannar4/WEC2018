@@ -35,6 +35,8 @@
 		383160A020097549007EE82E /* UILoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3831609E20097548007EE82E /* UILoginViewController.swift */; };
 		383160A120097549007EE82E /* UIAnimatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3831609F20097549007EE82E /* UIAnimatedTextField.swift */; };
 		383160A42009756E007EE82E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383160A32009756E007EE82E /* Router.swift */; };
+		3856C6B520097FAC00755019 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3856C6B420097FAB00755019 /* TaskTableViewCell.swift */; };
+		3856C6B72009818E00755019 /* TodoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3856C6B220097F8500755019 /* TodoTableViewController.swift */; };
 		385E7FC920092149003412F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FC820092149003412F3 /* AppDelegate.swift */; };
 		385E7FCB20092149003412F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E7FCA20092149003412F3 /* ViewController.swift */; };
 		385E7FCD20092149003412F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 385E7FCC20092149003412F3 /* Assets.xcassets */; };
@@ -89,6 +91,8 @@
 		3831609E20097548007EE82E /* UILoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILoginViewController.swift; sourceTree = "<group>"; };
 		3831609F20097549007EE82E /* UIAnimatedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimatedTextField.swift; sourceTree = "<group>"; };
 		383160A32009756E007EE82E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		3856C6B220097F8500755019 /* TodoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTableViewController.swift; sourceTree = "<group>"; };
+		3856C6B420097FAB00755019 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		385E7FC520092149003412F3 /* WEC2018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WEC2018.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		385E7FC820092149003412F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		385E7FCA20092149003412F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +205,15 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		3856C6B62009816900755019 /* Todo */ = {
+			isa = PBXGroup;
+			children = (
+				3856C6B220097F8500755019 /* TodoTableViewController.swift */,
+				3856C6B420097FAB00755019 /* TaskTableViewCell.swift */,
+			);
+			path = Todo;
+			sourceTree = "<group>";
+		};
 		385E7FBC20092149003412F3 = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +238,7 @@
 				385E7FC820092149003412F3 /* AppDelegate.swift */,
 				383160A32009756E007EE82E /* Router.swift */,
 				38316098200974AD007EE82E /* WelcomeViewController.swift */,
+				3856C6B62009816900755019 /* Todo */,
 				383160A22009754D007EE82E /* Auth */,
 				3824467920096E00005B2F8C /* Models */,
 				3824466C20096DE0005B2F8C /* Notes */,
@@ -448,9 +462,11 @@
 				3824464620094140005B2F8C /* DateExtensions.swift in Sources */,
 				385E7FEE2009248D003412F3 /* Date+Extensions.swift in Sources */,
 				385E7FEC2009248D003412F3 /* UIAlertController+Extensions.swift in Sources */,
+				3856C6B72009818E00755019 /* TodoTableViewController.swift in Sources */,
 				3824467420096DFA005B2F8C /* NewNoteView.swift in Sources */,
 				385E7FD8200923FC003412F3 /* CalendarViewController.swift in Sources */,
 				3831609720096FE7007EE82E /* Auth.swift in Sources */,
+				3856C6B520097FAC00755019 /* TaskTableViewCell.swift in Sources */,
 				3824464720094140005B2F8C /* AvoidingSubviewScrollViewDelegate.swift in Sources */,
 				3831609C2009750E007EE82E /* UserSignUpViewController.swift in Sources */,
 				3824467720096DFA005B2F8C /* NewNoteViewController.swift in Sources */,

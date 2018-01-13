@@ -27,6 +27,7 @@ class NewNoteViewController: UIViewController {
         
         newNoteView.dateLabel.text = note.date?.string(dateStyle: .medium, timeStyle: .short)
         
+        newNoteView.titleText.text = note.content
         newNoteView.titleText.onTextDidChange {
             self.note.content = $0
         }

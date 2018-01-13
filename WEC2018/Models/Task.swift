@@ -15,6 +15,7 @@ class Task: PFObject {
     @NSManaged var title: String?
     @NSManaged var date: Date?
     @NSManaged var isDone: NSNumber?
+    @NSManaged var user: PFUser?
     
 }
 

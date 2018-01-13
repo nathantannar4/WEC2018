@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 import SwiftyPickerPopover
 
 class EventDetailViewController: UIViewController {
@@ -61,6 +62,7 @@ class EventDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         if event == nil {
             self.event = PlannerEvent()
+            self.event?.user = PFUser.current()
             tableView.isHidden = true
             cell.dateLabel.text = "Date"
             cell.timeLabel.text = "Time"

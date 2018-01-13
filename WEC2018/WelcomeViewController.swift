@@ -13,6 +13,13 @@ class WelcomeViewController: UIViewController {
     
     // MARK: - Properties
     
+    let label: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.text = "Get My Life Together"
+        return label
+    }()
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -82,6 +89,7 @@ class WelcomeViewController: UIViewController {
         view.backgroundColor = UIColor(hex: "FAFAFA")
         view.addSubview(contentView)
         view.addSubview(imageView)
+        view.addSubview(label)
         contentView.anchor(view.layoutMarginsGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 150)
         
         contentView.addSubview(loginButton)
@@ -95,6 +103,9 @@ class WelcomeViewController: UIViewController {
         imageView.anchorCenterXToSuperview()
         imageView.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: 50).isActive = true
         imageView.anchor(widthConstant: 150, heightConstant: 150)
+        
+        label.anchorCenterXToSuperview()
+        label.anchor(view.safeAreaLayoutGuide.topAnchor, topConstant: 50)
     }
     
     // MARK: - Networking

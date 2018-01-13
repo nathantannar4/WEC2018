@@ -17,6 +17,7 @@ class PlannerEvent: PFObject {
     @NSManaged var endDate: Date?
     @NSManaged var isAllDay: NSNumber?
     @NSManaged var tasks: [Task]?
+    @NSManaged var user: PFUser?
 }
 
 extension PlannerEvent: PFSubclassing {

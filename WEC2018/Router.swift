@@ -29,7 +29,8 @@ class Router {
             let viewControllers = [
                 UINavigationController(rootViewController: NoteTableViewController()),
                 TimerViewController(),
-                CalendarViewController()
+                CalendarViewController(),
+                UINavigationController(rootViewController: TodoTableViewController())
             ]
             
             let tabBarController = UITabBarController()

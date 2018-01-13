@@ -9,8 +9,12 @@
 import UIKit
 import Hero
 import JTAppleCalendar
+import Parse
+import ParseLiveQuery
 
 class CalendarViewController: UIViewController {
+    
+    var events = [PlannerEvent]()
     
     var headerView: UIView = {
         let view = UIView()
@@ -84,6 +88,14 @@ class CalendarViewController: UIViewController {
         return collectionView
     }()
     
+    lazy var eventsQuery: PFQuery<PlannerEvent> = {
+        return PlannerEvent.query()?.whereKey("user", equalTo: PFUser.current() ?? "").includeKey("user").addDescendingOrder("updatedAt") as! PFQuery<PlannerEvent>
+    }()
+    
+    var subscription: Subscription<PlannerEvent>? = nil
+    
+    var client: Client?
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         title = "Calendar"
@@ -100,6 +112,50 @@ class CalendarViewController: UIViewController {
         
         view.backgroundColor = .white
         setupCalendarView()
+    }
+    
+    private func loadEvent() {
+        
+        eventsQuery.findObjectsInBackground(block: { (objects, error) in
+            guard let objects = objects as? [PlannerEvent] else {
+                self.handleError(error?.localizedDescription)
+                return
+            }
+            self.events = objects
+            self.calendarView.reloadData()
+        })
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.navigationBar.apply(Stylesheet.ViewController.navigationBar)
+        
+//        if subscription != nil { return }
+//        subscription = Client.shared.subscribe(notesQuery)
+//        subscription?.handle(Event.created) { query, note in
+//            DispatchQueue.main.sync {
+//                self.notes.insert(note, at: 0)
+//                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//            }
+//        }
+//        subscription?.handle(Event.updated) { query, note in
+//            DispatchQueue.main.sync {
+//                if let index = self.notes.index(where: { return $0.objectId == note.objectId }) {
+//                    self.notes[index] = note
+//                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+//                }
+//            }
+//        }
+//        subscription?.handle(Event.deleted) { query, note in
+//            DispatchQueue.main.sync {
+//                if let index = self.notes.index(where: { return $0.objectId == note.objectId }) {
+//                    self.notes.remove(at: index)
+//                    self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+//                }
+//            }
+//        }
     }
     
     func handleCellTextColor(cell: JTAppleCell?, cellState: CellState){
@@ -154,8 +210,8 @@ class CalendarViewController: UIViewController {
     @objc
     func didTapAdd() {
         
-        let newEvent = EventDetailViewController(event: nil)
-        present(newEvent, animated: true, completion: nil)
+        let vc = EventDetailViewController(event: nil)
+        present(vc, animated: true, completion: nil)
     }
 }
 
