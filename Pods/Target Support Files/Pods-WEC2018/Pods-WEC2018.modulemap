@@ -1,6 +1,0 @@
-framework module Pods_WEC2018 {
-  umbrella header "Pods-WEC2018-umbrella.h"
-
-  export *
-  module * { export * }
-}
