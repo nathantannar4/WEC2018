@@ -17,6 +17,7 @@ class UserLoginViewController: UILoginViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        passwordResetButton.isHidden = true
         view.apply(Stylesheet.ViewController.view)
         tintColor = .primaryColor
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
