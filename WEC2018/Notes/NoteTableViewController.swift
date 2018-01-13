@@ -50,7 +50,7 @@ class NoteTableViewController: UITableViewController {
     private func loadNotes() {
         
         notesQuery.findObjectsInBackground(block: { (objects, error) in
-            guard let objects = objects as? [Note] else {
+            guard let objects = objects else {
                 self.handleError(error?.localizedDescription)
                 return
             }

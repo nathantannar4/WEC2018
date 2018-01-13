@@ -22,7 +22,7 @@ class Router {
             return WelcomeViewController()
         case .home:
             
-            guard let currentUser = PFUser.current() else { return WelcomeViewController() }
+            guard PFUser.current() != nil else { return WelcomeViewController() }
             
             UIApplication.shared.statusBarStyle = .lightContent
             

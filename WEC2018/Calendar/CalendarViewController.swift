@@ -124,9 +124,9 @@ class CalendarViewController: UIViewController {
                 self.handleError(error?.localizedDescription)
                 return
             }
-            print(objects)
             self.events = objects
             self.calendarView.reloadData()
+            self.calendarView.scrollToDate(Date())
         })
         
     }
@@ -207,7 +207,6 @@ class CalendarViewController: UIViewController {
         calendarView.showsHorizontalScrollIndicator = false
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
-        calendarView.scrollToDate(Date())
         monthLabel.text = Date().monthNameFull.capitalized + " " + Date().yearFourDigit
     }
     

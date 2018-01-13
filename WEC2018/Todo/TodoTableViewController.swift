@@ -13,6 +13,7 @@ import ParseLiveQuery
 class TodoTableViewController: UITableViewController {
     
     //MARK: Properties
+    
     var tasks = [Task]()
     
     lazy var tasksQuery: PFQuery<Task> = {
