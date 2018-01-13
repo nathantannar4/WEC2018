@@ -22,6 +22,8 @@ We are the team representing Simon Fraser University - Surrey. Our team consists
 
 ## User guide
 
+OPEN THE .xcworkspace file to build
+
 Our user guide can be found [here](https://github.com/nathantannar4/WEC2018/blob/master/WEC%202018%20Programming%20-%20User%20Guide%20-%20%20SFU%20Surrey.pdf). It is intended to be readable for first-time users of an iPhone.
 
 ## Presentation
